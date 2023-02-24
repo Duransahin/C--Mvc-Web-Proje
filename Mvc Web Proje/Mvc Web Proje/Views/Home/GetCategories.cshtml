@@ -1,0 +1,50 @@
+﻿@using Mvc_Web_Proje.Entity;
+@model IEnumerable<Category>
+
+@{
+    var selectedCategory = Url.RequestContext.RouteData.Values["id"];
+}
+
+<ul class="list-group">
+
+    <a href="/Home/List" class="list-group-item">
+        <i class="fa-sharp fa-solid fa-angles-right"></i>
+        Tüm Kategoriler
+    </a>
+
+
+
+
+    @foreach (var item in Model)
+    {// Burada selectedCategory obje olduğu için ilk önce obje boş değer mi onu kontrol ediyoruz
+        if (selectedCategory != null)
+        {// Yukarıda objenin boş değer olup olmadığını sorguladık
+         // Aşağıda ki if içinde de selectedCategory tür dönüşümü yaptık ilk string yapıya çevirip daha sonra int'e çevirdik.
+            if (item.Id == int.Parse(selectedCategory.ToString()))
+            {
+                // Burada kategori ile raout id'si eşit olduğunu görecez.
+
+                <a href="/Home/List/@item.Id" class="list-group-item active">
+                    <i class="fa-sharp fa-solid fa-angles-right"></i>
+                    @item.Name
+                </a>
+            }
+            else
+            {
+                <a href="/Home/List/@item.Id" class="list-group-item ">
+                    <i class="fa-sharp fa-solid fa-angles-right"></i>
+                    @item.Name
+                </a>
+            }
+        }
+        else
+        {
+            <a href="/Home/List/@item.Id" class="list-group-item ">
+                <i class="fa-sharp fa-solid fa-angles-right"></i>
+                @item.Name
+            </a>
+        }
+
+
+    }
+</ul>
